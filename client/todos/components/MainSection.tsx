@@ -15,8 +15,16 @@ const TODO_FILTERS = {
   [SHOW_COMPLETED]: todo => todo.completed
 };
 
+const typeheadFilter = function (arr, str) {
+    if (!str || str === ' ') {
+        return arr;
+    }
+    return arr.filter(t => (t.text.indexOf(str) !== -1));
+};
+
 interface MainSectionProps {
   todos: Todo[];
+  typeahead: string;
   clearCompleted: ()=>void;
   completeAll: ()=>void;
   editTodo: (todo:Todo, text:string)=>void;
@@ -73,10 +81,9 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   }
 
   render() {
-    const { todos, completeTodo, deleteTodo, editTodo } = this.props;
+    const { todos, typeahead, completeTodo, deleteTodo, editTodo } = this.props;
     const { filter } = this.state;
-
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
+    const filteredTodos = typeheadFilter(todos.filter(TODO_FILTERS[filter]), typeahead);
     const completedCount = todos.reduce((count: number, todo): number =>
       todo.completed ? count + 1 : count,
       0

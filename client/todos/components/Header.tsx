@@ -15,9 +15,7 @@ class Header extends React.Component<HeaderProps, void> {
     }
 
     handleChange(typehead: string) {
-        if (typehead.length !== 0) {
-            this.props.setTypehead(typehead);
-        }
+        this.props.setTypehead(typehead);
     }
 
     render() {

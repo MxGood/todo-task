@@ -20,16 +20,44 @@ interface AppProps {
     dispatch: Dispatch<{}>;
 }
 
-class App extends React.Component<AppProps, void> {
+interface AppState {
+    isShowList: boolean;
+}
+
+class App extends React.Component<AppProps, AppState> {
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            isShowList: false
+        };
+    }
+
+    showList() {
+        this.setState({
+            isShowList: true
+        });
+    }
+
+    hideList() {
+        let that = this;
+        setTimeout(function () {
+            that.setState({
+                isShowList: false
+            }) } , 300);
+    }
+
     render() {
         const { store, dispatch } = this.props;
         return (
             <div className="todoapp">
                 <Header
+                    onFocus={() => this.showList() }
+                    onBlur={() => this.hideList() }
                     typehead={store.typeahead}
                     addTodo={(text: string) => dispatch(addTodo(text)) }
                     setTypehead={(typehead: string) => dispatch(setTypehead(typehead)) }/>
                 <MainSection
+                    isShowList={this.state.isShowList}
                     todos={store.todos}
                     typeahead={store.typeahead}
                     setTypehead={(typehead: string) => dispatch(setTypehead(typehead)) }

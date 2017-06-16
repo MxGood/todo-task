@@ -6,6 +6,8 @@ interface HeaderProps {
     typehead: string;
     addTodo: (text: string) => any;
     setTypehead: (typehead: string) => any;
+    onFocus: () => void;
+    onBlur: () => void;
 };
 
 class Header extends React.Component<HeaderProps, void> {
@@ -19,6 +21,14 @@ class Header extends React.Component<HeaderProps, void> {
         this.props.setTypehead(typehead);
     }
 
+    handleFocus() {
+        this.props.onFocus();
+    }
+
+    handleBlur() {
+        this.props.onBlur();
+    }
+
     render() {
         return (
             <header className="header">
@@ -28,6 +38,8 @@ class Header extends React.Component<HeaderProps, void> {
                     newTodo={true}
                     onSave={this.handleSave.bind(this) }
                     onChange={this.handleChange.bind(this) }
+                    onBlur={this.handleBlur.bind(this) }
+                    onFocus={this.handleFocus.bind(this) }
                     placeholder="What needs to be done?" />
             </header>
         );

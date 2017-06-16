@@ -23,6 +23,7 @@ const typeheadFilter = function (arr: Todo[], str: string): Todo[] {
 };
 
 interface MainSectionProps {
+  isShowList: boolean;
   todos: Todo[];
   typeahead: string;
   setTypehead: (typehead: string) => any;
@@ -91,16 +92,14 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
       0
     );
 
-    return (
+    return this.props.isShowList && (
       <section className="main">
-        {this.renderToggleAll(completedCount)}
         <ul className="todo-list">
           {filteredTodos.map(todo =>
             <TodoItem
               key={todo.id}
               todo={todo}
               setTypehead={setTypehead}
-              editTodo={editTodo}
               completeTodo={completeTodo}
               deleteTodo={deleteTodo}/>
           )}

@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 
 interface TodoTextInputProps {
+    onFocus: () => void;
+    onBlur: () => void;
     onSave: (text: string) => void;
     onChange?: (typehead: string) => void;
     text?: string;
@@ -34,17 +36,21 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
     handleChange(e) {
         const text = e.target.value.trim();
         this.setState({ text: e.target.value });
-        this.props.onChange && this.props.onChange(text);
+        this.props.onChange(text);
     }
 
     handleBlur(e) {
         if (!this.props.newTodo) {
             this.props.onSave(e.target.value);
         }
+        this.props.onBlur();
+    }
+
+    handleFocus() {
+        this.props.onFocus();
     }
 
     render() {
-        const value = this.props.newTodo ? this.props.text : this.state.text;
         return (
             <input className={
                 classNames({
@@ -53,9 +59,9 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
                 }) }
                 type="text"
                 placeholder={this.props.placeholder}
-                autoFocus={true}
-                value={value}
+                value={this.props.text}
                 onBlur={this.handleBlur.bind(this) }
+                onFocus={this.handleFocus.bind(this) }
                 onChange={this.handleChange.bind(this) }
                 onKeyDown={this.handleSubmit.bind(this) } />
         );

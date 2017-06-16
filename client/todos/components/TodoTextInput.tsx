@@ -34,7 +34,7 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
     handleChange(e) {
         const text = e.target.value.trim();
         this.setState({ text: e.target.value });
-        this.props.onChange(text);
+        this.props.onChange && this.props.onChange(text);
     }
 
     handleBlur(e) {
@@ -44,6 +44,7 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
     }
 
     render() {
+        const value = this.props.newTodo ? this.props.text : this.state.text;
         return (
             <input className={
                 classNames({
@@ -53,13 +54,12 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
                 type="text"
                 placeholder={this.props.placeholder}
                 autoFocus={true}
-                value={this.state.text}
+                value={value}
                 onBlur={this.handleBlur.bind(this) }
                 onChange={this.handleChange.bind(this) }
                 onKeyDown={this.handleSubmit.bind(this) } />
         );
     }
 }
-
 
 export default TodoTextInput;

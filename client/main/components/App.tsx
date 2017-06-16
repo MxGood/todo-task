@@ -26,11 +26,13 @@ class App extends React.Component<AppProps, void> {
         return (
             <div className="todoapp">
                 <Header
+                    typehead={store.typeahead}
                     addTodo={(text: string) => dispatch(addTodo(text)) }
                     setTypehead={(typehead: string) => dispatch(setTypehead(typehead)) }/>
                 <MainSection
                     todos={store.todos}
                     typeahead={store.typeahead}
+                    setTypehead={(typehead: string) => dispatch(setTypehead(typehead)) }
                     editTodo={(t, s) => dispatch(editTodo(t, s)) }
                     deleteTodo={(t: model.Todo) => dispatch(deleteTodo(t)) }
                     completeTodo={(t: model.Todo) => dispatch(completeTodo(t)) }

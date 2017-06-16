@@ -6,6 +6,7 @@ import TodoTextInput from './TodoTextInput';
 
 interface TodoItemProps {
   todo: Todo;
+  setTypehead: (typehead: string) => any;
   editTodo: (todo:Todo, text:string)=>void;
   deleteTodo: (todo:Todo)=>void;
   completeTodo: (todo:Todo)=>void;
@@ -25,6 +26,10 @@ class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
 
   handleDoubleClick() {
     this.setState({ editing: true });
+  }
+
+  handleClick() {
+      this.props.setTypehead(this.props.todo.text);
   }
 
   handleSave(todo:Todo, text:string) {
@@ -53,7 +58,8 @@ class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
                  type="checkbox"
                  checked={todo.completed}
                  onChange={() => completeTodo(todo)} />
-          <label onDoubleClick={this.handleDoubleClick.bind(this)}>
+          <label onDoubleClick={this.handleDoubleClick.bind(this)}
+                 onClick={this.handleClick.bind(this) }>
             {todo.text}
           </label>
           <button className="destroy"

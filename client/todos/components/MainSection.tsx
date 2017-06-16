@@ -25,6 +25,7 @@ const typeheadFilter = function (arr: Todo[], str: string): Todo[] {
 interface MainSectionProps {
   todos: Todo[];
   typeahead: string;
+  setTypehead: (typehead: string) => any;
   clearCompleted: ()=>void;
   completeAll: ()=>void;
   editTodo: (todo:Todo, text:string)=>void;
@@ -81,7 +82,7 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   }
 
   render() {
-    const { todos, typeahead, completeTodo, deleteTodo, editTodo } = this.props;
+    const { todos, typeahead, completeTodo, deleteTodo, editTodo, setTypehead } = this.props;
     const { filter } = this.state;
     const typeheadedTodos = typeheadFilter(todos, typeahead);
     const filteredTodos = typeheadedTodos.filter(TODO_FILTERS[filter]);
@@ -98,6 +99,7 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
             <TodoItem
               key={todo.id}
               todo={todo}
+              setTypehead={setTypehead}
               editTodo={editTodo}
               completeTodo={completeTodo}
               deleteTodo={deleteTodo}/>

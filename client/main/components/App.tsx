@@ -43,13 +43,18 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     setTypehead = (typehead: string) => {
-        console.log('this.props.store = ', this.props.store);
-        console.log('this.props.dispatch = ', this.props.dispatch);
-        console.log('this.props.dispatch(setTypehead(typehead)) = ', this.props.dispatch(setTypehead(typehead)));
+        this.props.dispatch(setTypehead(typehead));
+    }
+
+    addTodo = (text: string) => {
+        this.props.dispatch(addTodo(text));
+    }
+
+    deleteTodo = (t: model.Todo) => {
+        this.props.dispatch(deleteTodo(t));
     }
 
     render() {
-        //console.log('mapStateToProps = ', mapStateToProps(this.state));
         const { store, dispatch } = this.props;
         this.log(this.props.store);
         this.log2(this.props);
@@ -59,14 +64,14 @@ class App extends React.Component<AppProps, AppState> {
                     onFocus={() => this.showList() }
                     onBlur={() => this.hideList() }
                     typehead={store.typeahead}
-                    addTodo={(text: string) => dispatch(addTodo(text)) }
+                    addTodo={(text: string) => this.addTodo(text) }
                     setTypehead={(typehead: string) => this.setTypehead(typehead) }/>
                 <MainSection
                     isShowList={this.state.isShowList}
                     todos={store.todos}
                     typeahead={store.typeahead}
                     setTypehead={(typehead: string) => this.setTypehead(typehead) }
-                    deleteTodo={(t: model.Todo) => dispatch(deleteTodo(t)) }/>
+                    deleteTodo={(t: model.Todo) => this.deleteTodo(t) }/>
             </div>
         );
     }

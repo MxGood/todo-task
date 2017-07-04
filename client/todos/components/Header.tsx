@@ -1,24 +1,26 @@
 import * as React from 'react';
-
-import TodoTextInput from './TodoTextInput';
+import * as classNames from 'classnames';
 
 interface HeaderProps {
     typehead: string;
-    addTodo: (text: string) => any;
-    setTypehead: (typehead: string) => any;
+    addTodo: (text: string) => void;
+    setTypehead: (typehead: string) => void;
     onFocus: () => void;
     onBlur: () => void;
 };
 
 class Header extends React.Component<HeaderProps, void> {
-    handleSave = (text: string) => {
-        if (text.length !== 0) {
+
+    handleSubmit = (e) => {
+        const text = e.target.value.trim();
+        if (e.which === 13) {
             this.props.addTodo(text);
         }
     }
 
-    handleChange = (typehead: string) => {
-        this.props.setTypehead(typehead);
+    handleChange = (e) => {
+        const text = e.target.value.trim();
+        this.props.setTypehead(text);
     }
 
     handleFocus = () => {
@@ -33,14 +35,18 @@ class Header extends React.Component<HeaderProps, void> {
         return (
             <header className="header">
                 <h1>todos</h1>
-                <TodoTextInput
-                    text={this.props.typehead}
-                    newTodo={true}
-                    onSave={this.handleSave }
-                    onChange={this.handleChange }
-                    onBlur={this.handleBlur }
-                    onFocus={this.handleFocus }
-                    placeholder="What needs to be done?" />
+                <input className={
+                    classNames({
+                        edit: false,
+                        'new-todo': true
+                    })}
+                    type="text"
+                    placeholder="What needs to be done?"
+                    value={this.props.typehead}
+                    onBlur={this.handleBlur}
+                    onFocus={this.handleFocus}
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleSubmit} />
             </header>
         );
     }

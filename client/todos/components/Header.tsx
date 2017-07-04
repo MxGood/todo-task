@@ -9,47 +9,44 @@ interface HeaderProps {
     onBlur: () => void;
 };
 
-class Header extends React.Component<HeaderProps, void> {
+function Header(props: HeaderProps) {
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         const text = e.target.value.trim();
         if (e.which === 13) {
-            this.props.addTodo(text);
+            props.addTodo(text);
         }
     }
 
-    handleChange = (e) => {
+    const handleChange = (e) => {
         const text = e.target.value.trim();
-        this.props.setTypehead(text);
+        props.setTypehead(text);
     }
 
-    handleFocus = () => {
-        this.props.onFocus();
+    const handleFocus = () => {
+        props.onFocus();
     }
 
-    handleBlur = () => {
-        this.props.onBlur();
+    const handleBlur = () => {
+        props.onBlur();
     }
-
-    render() {
-        return (
-            <header className="header">
-                <h1>todos</h1>
-                <input className={
-                    classNames({
-                        edit: false,
-                        'new-todo': true
-                    })}
-                    type="text"
-                    placeholder="What needs to be done?"
-                    value={this.props.typehead}
-                    onBlur={this.handleBlur}
-                    onFocus={this.handleFocus}
-                    onChange={this.handleChange}
-                    onKeyDown={this.handleSubmit} />
-            </header>
-        );
-    }
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input className={
+                classNames({
+                    edit: false,
+                    'new-todo': true
+                })}
+                type="text"
+                placeholder="What needs to be done?"
+                value={props.typehead}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onChange={handleChange}
+                onKeyDown={handleSubmit} />
+        </header>
+    );
 }
 
 export default Header;

@@ -13,7 +13,7 @@ interface TodoItemProps {
 
 class TodoItem extends React.Component<TodoItemProps, void> {
 
-  handleClick() {
+  handleClick = () => {
       this.props.setTypehead(this.props.todo.text);
       console.log('click');
   }
@@ -26,7 +26,7 @@ class TodoItem extends React.Component<TodoItemProps, void> {
         completed: todo.completed
       })}>
             <div className="view">
-                <label onClick={this.handleClick.bind(this)}>
+                <label onClick={this.handleClick}>
                     {todo.text}
                 </label>
                 <button className="destroy"

@@ -6,34 +6,28 @@ import { Todo } from '../model';
 interface TodoItemProps {
   todo: Todo;
   setTypehead: (typehead: string) => any;
-  deleteTodo: (todo:Todo)=>void;
+  deleteTodo: (todo: Todo) => void;
   key?: any;
 }
 
-class TodoItem extends React.Component<TodoItemProps, void> {
+function TodoItem(props: TodoItemProps) {
 
-  handleClick = () => {
-      this.props.setTypehead(this.props.todo.text);
-      console.log('click');
+  const handleClick = () => {
+    props.setTypehead(props.todo.text);
   }
+  const { todo, deleteTodo } = props;
 
-  render() {
-    const {todo, deleteTodo} = this.props;
-
-    return (
-      <li className={classNames({
-        completed: todo.completed
-      })}>
-            <div className="view">
-                <label onClick={this.handleClick}>
-                    {todo.text}
-                </label>
-                <button className="destroy"
-                    onClick={() => deleteTodo(todo) } />
-            </div>
-      </li>
-    );
-  }
+  return (
+    <li>
+      <div className="view">
+        <label onClick={handleClick}>
+          {todo.text}
+        </label>
+        <button className="destroy"
+          onClick={() => deleteTodo(todo)} />
+      </div>
+    </li>
+  );
 }
 
 export default TodoItem;

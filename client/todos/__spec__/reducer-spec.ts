@@ -15,22 +15,22 @@ describe('todo reducer', () => {
 
     it('handles add', () => {
         let state: IState = {
-            todos: [{ id: 0, text: '', completed: true }]
+            todos: [{ id: 0, text: '' }]
         };
 
         state = reducer(state, {
             type: ADD_TODO,
-            payload: { text: 'hello', completed: false }
+            payload: { text: 'hello' }
         });
 
         expect(state[0]).to.eql(
-            { id: 1, text: 'hello', completed: false }
+            { id: 1, text: 'hello' }
         );
     });
 
     it('handles delete', () => {
         let state: IState = {
-            todos: [{ id: 1, text: '', completed: false }]
+            todos: [{ id: 1, text: '' }]
         };
 
         state = reducer(state, {

@@ -11,7 +11,6 @@ import {
 const initialState: IState = {
     todos:[{
         text: 'Use Redux with TypeScript',
-        completed: false,
         id: 0
     }],
     typeahead: ''
@@ -30,7 +29,6 @@ export default handleActions<IState, Todo>({
         return <IState>{
             todos: [{
                 id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-                completed: action.payload.completed,
                 text: action.payload.text
             }, ...state.todos],
             typeahead: ''

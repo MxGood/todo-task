@@ -30,6 +30,7 @@ function Header(props: HeaderProps) {
     const handleBlur = () => {
         props.onBlur();
     }
+
     return (
         <header className="header">
             <h1>todos</h1>

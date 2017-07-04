@@ -14,8 +14,7 @@ describe('actions', () => {
   it('deletes todo', () => {
     const { payload: todo } = actions.deleteTodo({
       id: 999,
-      text: '',
-      completed: false
+      text: ''
     });
 
     expect(todo.id).to.eql(999);

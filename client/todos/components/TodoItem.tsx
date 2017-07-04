@@ -8,7 +8,6 @@ interface TodoItemProps {
   todo: Todo;
   setTypehead: (typehead: string) => any;
   deleteTodo: (todo:Todo)=>void;
-  completeTodo: (todo:Todo)=>void;
   key?: any;
 }
 
@@ -20,17 +19,13 @@ class TodoItem extends React.Component<TodoItemProps, void> {
   }
 
   render() {
-    const {todo, completeTodo, deleteTodo} = this.props;
+    const {todo, deleteTodo} = this.props;
 
     return (
       <li className={classNames({
         completed: todo.completed
       })}>
             <div className="view">
-                <input className="toggle"
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => completeTodo(todo) } />
                 <label onClick={this.handleClick.bind(this)}>
                     {todo.text}
                 </label>

@@ -11,21 +11,21 @@ interface HeaderProps {
 };
 
 class Header extends React.Component<HeaderProps, void> {
-    handleSave(text: string) {
+    handleSave = (text: string) => {
         if (text.length !== 0) {
             this.props.addTodo(text);
         }
     }
 
-    handleChange(typehead: string) {
+    handleChange = (typehead: string) => {
         this.props.setTypehead(typehead);
     }
 
-    handleFocus() {
+    handleFocus = () => {
         this.props.onFocus();
     }
 
-    handleBlur() {
+    handleBlur = () => {
         this.props.onBlur();
     }
 
@@ -36,10 +36,10 @@ class Header extends React.Component<HeaderProps, void> {
                 <TodoTextInput
                     text={this.props.typehead}
                     newTodo={true}
-                    onSave={this.handleSave.bind(this) }
-                    onChange={this.handleChange.bind(this) }
-                    onBlur={this.handleBlur.bind(this) }
-                    onFocus={this.handleFocus.bind(this) }
+                    onSave={this.handleSave }
+                    onChange={this.handleChange }
+                    onBlur={this.handleBlur }
+                    onFocus={this.handleFocus }
                     placeholder="What needs to be done?" />
             </header>
         );

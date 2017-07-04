@@ -8,11 +8,7 @@ import { Todo, IState } from '../model';
 import {
     SET_TYPEHEAD,
     ADD_TODO,
-    DELETE_TODO,
-    EDIT_TODO,
-    COMPLETE_TODO,
-    COMPLETE_ALL,
-    CLEAR_COMPLETED
+    DELETE_TODO
 } from '../constants/ActionTypes';
 
 describe('todo reducer', () => {
@@ -43,86 +39,5 @@ describe('todo reducer', () => {
         });
 
         expect(state).to.eql([]);
-    });
-
-    it('handles edit', () => {
-        let state: IState = {
-            todos: [{ id: 1, text: '', completed: false }]
-        };
-
-        state = reducer(state, {
-            type: EDIT_TODO,
-            payload: { id: 1, text: 'hello' } as Todo
-        });
-
-        expect(state[0]).to.eql(
-            { id: 1, text: 'hello', completed: false }
-        );
-    });
-
-    it('handles complete all', () => {
-
-        let state: IState = {
-            todos: [{ id: 1, text: '', completed: false }]
-        };
-
-        state = reducer(state, {
-            type: COMPLETE_TODO,
-            payload: { id: 1 } as Todo
-        });
-
-        expect(state[0]).to.eql(
-            { id: 1, text: '', completed: true }
-        );
-    });
-
-    it('handles complete all', () => {
-        let state: IState = {
-            todos: [
-                { id: 1, text: '', completed: false },
-                { id: 2, text: '', completed: true },
-                { id: 3, text: '', completed: false }
-            ]
-        };
-
-        state = reducer(state, {
-            type: COMPLETE_ALL,
-            payload: {} as Todo
-        });
-
-        expect(state).to.eql([
-            { id: 1, text: '', completed: true },
-            { id: 2, text: '', completed: true },
-            { id: 3, text: '', completed: true }
-        ]);
-
-        state = reducer(state, {
-            type: COMPLETE_ALL,
-            payload: {} as Todo
-        });
-
-        expect(state).to.eql([
-            { id: 1, text: '', completed: false },
-            { id: 2, text: '', completed: false },
-            { id: 3, text: '', completed: false }
-        ]);
-    });
-
-    it('handles clear completed', () => {
-        let state: IState = {
-            todos: [
-                { id: 1, text: '', completed: false },
-                { id: 2, text: '', completed: true }
-            ]
-        };
-
-        state = reducer(state, {
-            type: CLEAR_COMPLETED,
-            payload: {} as Todo
-        });
-
-        expect(state).to.eql([
-            { id: 1, text: '', completed: false }
-        ]);
     });
 });

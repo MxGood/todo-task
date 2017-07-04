@@ -5,11 +5,7 @@ import { Todo, IState } from './model';
 import {
     SET_TYPEHEAD,
     ADD_TODO,
-    DELETE_TODO,
-    EDIT_TODO,
-    COMPLETE_TODO,
-    COMPLETE_ALL,
-    CLEAR_COMPLETED
+    DELETE_TODO
 } from './constants/ActionTypes';
 
 const initialState: IState = {
@@ -47,38 +43,5 @@ export default handleActions<IState, Todo>({
                 todo.id !== action.payload.id
             )
         };
-    },
-
-    [EDIT_TODO]: (state: IState, action: Action<Todo>): IState => {
-        return <IState>{
-            todos: state.todos.map(todo =>
-                todo.id === action.payload.id
-                    ? assign(<Todo>{}, todo, { text: action.payload.text })
-                    : todo
-            )
-        };
-    },
-
-    [COMPLETE_TODO]: (state: IState, action: Action<Todo>): IState => {
-        return <IState>{
-            todos: state.todos.map(todo =>
-                todo.id === action.payload.id ?
-                    assign({}, todo, { completed: !todo.completed }) :
-                    todo
-            )
-        };
-    },
-
-    [COMPLETE_ALL]: (state: IState, action: Action<Todo>): IState => {
-        const areAllMarked = state.todos.every(todo => todo.completed);
-        return <IState>{
-            todos: state.todos.map(todo => assign({}, todo, {
-                completed: !areAllMarked
-            }))
-        };
-    },
-
-    [CLEAR_COMPLETED]: (state: IState, action: Action<Todo>): IState => {
-        return <IState>{ todos: state.todos.filter(todo => todo.completed === false) };
     }
 }, initialState);

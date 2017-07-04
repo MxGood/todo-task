@@ -40,9 +40,9 @@ class TodoTextInput extends React.Component<TodoTextInputProps, TodoTextInputSta
     }
 
     handleBlur(e) {
-        if (!this.props.newTodo) {
-            this.props.onSave(e.target.value);
-        }
+        // if (!this.props.newTodo) {
+        //     this.props.onSave(e.target.value);
+        // }
         this.props.onBlur();
     }
 

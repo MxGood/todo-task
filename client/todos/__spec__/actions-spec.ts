@@ -20,23 +20,4 @@ describe('actions', () => {
 
     expect(todo.id).to.eql(999);
   });
-
-  it('edits todo', () => {
-    const { payload: todo } = actions.editTodo({
-      id: 999,
-      text: 'hi',
-      completed: false
-    }, 'bye');
-    expect(todo).to.eql({ id: 999, text: 'bye', completed: false});
-  });
-
-  it('completes todo', () => {
-    const { payload: todo } = actions.completeTodo({
-      id: 999,
-      text: '',
-      completed: false
-    });
-
-    expect(todo.id).to.eql(999);
-  });
 });

@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
 
@@ -13,7 +13,9 @@ import {
 
 interface AppProps {
     store: model.IState;
-    dispatch: Dispatch<{}>;
+    setTypehead: (text: string) => any;
+    addTodo: (text: string) => any;
+    deleteTodo: (todo: model.Todo) => any;
 }
 
 interface AppState {
@@ -21,67 +23,80 @@ interface AppState {
 }
 
 class App extends React.Component<AppProps, AppState> {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
         this.state = {
             isShowList: false
         };
     }
 
-    showList() {
+    showList = () => {
         this.setState({
             isShowList: true
         });
     }
 
-    hideList() {
-        let that = this;
-        setTimeout(function () {
-            that.setState({
+    hideList = () => {
+        setTimeout(() => {
+            this.setState({
                 isShowList: false
-            }) } , 300);
+            })
+        }, 300);
     }
 
-    setTypehead = (typehead: string) => {
-        this.props.dispatch(setTypehead(typehead));
-    }
+    // setTypehead = (typehead: string) => {
+    //     console.log('this.props.store = ', this.props.store);
+    //     console.log('this.props.dispatch = ', this.props.dispatch);
+    //     console.log('this.props.dispatch(setTypehead(typehead)) = ', this.props.dispatch(setTypehead(typehead)));
+    // }
 
-    addTodo = (text: string) => {
-        this.props.dispatch(addTodo(text));
-    }
+    // addTodo = (text: string) => {
+    //     this.props.dispatch(addTodo(text));
+    // }
 
-    deleteTodo = (t: model.Todo) => {
-        this.props.dispatch(deleteTodo(t));
-    }
+    // deleteTodo = (t: model.Todo) => {
+    //     this.props.dispatch(deleteTodo(t));
+    // }
 
     render() {
-        const { store, dispatch } = this.props;
+        console.log('mapStateToProps = ', mapStateToProps(this.state));
+        console.log('mapDispatchToProps = ', mapDispatchToProps(this.state));
+        const { store } = this.props;
         this.log(this.props.store);
         this.log2(this.props);
         return (
             <div className="todoapp">
                 <Header
-                    onFocus={() => this.showList() }
-                    onBlur={() => this.hideList() }
+                    onFocus={() => this.showList()}
+                    onBlur={() => this.hideList()}
                     typehead={store.typeahead}
-                    addTodo={(text: string) => this.addTodo(text) }
-                    setTypehead={(typehead: string) => this.setTypehead(typehead) }/>
-                <MainSection
-                    isShowList={this.state.isShowList}
+                    addTodo={(text: string) => this.props.addTodo(text)}
+                    setTypehead={(typehead: string) => this.props.setTypehead(typehead)} />
+                {this.state.isShowList && <MainSection
                     todos={store.todos}
                     typeahead={store.typeahead}
-                    setTypehead={(typehead: string) => this.setTypehead(typehead) }
-                    deleteTodo={(t: model.Todo) => this.deleteTodo(t) }/>
+                    setTypehead={(typehead: string) => this.props.setTypehead(typehead)}
+                    deleteTodo={(t: model.Todo) => this.props.deleteTodo(t)} />}
             </div>
         );
     }
-    
+
     log = (store) => console.log('this.props.store2 = ', store);
     log2 = (props) => console.log('this.props2 = ', props);
 }
 
-const mapStateToProps = state => ({
-    store: state.todos
-});
+const mapStateToProps = state => {
+    return {
+        store: state.todos
+    }
+};
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        setTypehead,
+        addTodo,
+        deleteTodo
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

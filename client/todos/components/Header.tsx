@@ -9,45 +9,46 @@ interface HeaderProps {
     onBlur: () => void;
 };
 
-function Header(props: HeaderProps) {
+class Header extends React.Component<HeaderProps, any> {
 
-    function handleSubmit(e) {
+    constructor(props){
+        super(props);
+        this.state = {typehead: ''};
+    }
+
+    handleSubmit = (e) => {
         const text = e.target.value.trim();
-        if (e.which === 13) {
-            props.addTodo(text);
+        if (text && e.which === 13) {
+            this.props.addTodo(this.state.typehead);
+            this.setState({typehead: ''});
         }
     }
 
-    function handleChange(e) {
+    handleChange = (e) => {
         const text = e.target.value.trim();
-        props.setTypehead(text);
+        this.setState({typehead: text});
+        this.props.setTypehead(this.state.typehead);
     }
 
-    function handleFocus() {
-        props.onFocus();
+    render() {
+        return (
+            <header className="header">
+                <h1>todos</h1>
+                <input className={
+                    classNames({
+                        edit: false,
+                        'new-todo': true
+                    })}
+                    type="text"
+                    placeholder="What needs to be done?"
+                    value={this.state.typehead}
+                    onBlur={this.props.onBlur}
+                    onFocus={this.props.onFocus}
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleSubmit} />
+            </header>
+        );
     }
-
-    function handleBlur() {
-        props.onBlur();
-    }
-
-    return (
-        <header className="header">
-            <h1>todos</h1>
-            <input className={
-                classNames({
-                    edit: false,
-                    'new-todo': true
-                })}
-                type="text"
-                placeholder="What needs to be done?"
-                value={props.typehead}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                onChange={handleChange}
-                onKeyDown={handleSubmit} />
-        </header>
-    );
 }
 
 export default Header;

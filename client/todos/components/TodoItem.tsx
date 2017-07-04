@@ -14,7 +14,7 @@ function TodoItem(props: TodoItemProps) {
 
   const handleClick = () => {
     props.setTypehead(props.todo.text);
-  }
+  };
   const { todo, deleteTodo } = props;
 
   return (

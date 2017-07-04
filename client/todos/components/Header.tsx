@@ -11,23 +11,23 @@ interface HeaderProps {
 
 function Header(props: HeaderProps) {
 
-    const handleSubmit = (e) => {
+    function handleSubmit(e) {
         const text = e.target.value.trim();
         if (e.which === 13) {
             props.addTodo(text);
         }
     }
 
-    const handleChange = (e) => {
+    function handleChange(e) {
         const text = e.target.value.trim();
         props.setTypehead(text);
     }
 
-    const handleFocus = () => {
+    function handleFocus() {
         props.onFocus();
     }
 
-    const handleBlur = () => {
+    function handleBlur() {
         props.onBlur();
     }
 

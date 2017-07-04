@@ -1,4 +1,3 @@
-import { assign } from 'lodash';
 import { handleActions, Action } from 'redux-actions';
 
 import { Todo, IState } from './model';

@@ -15,30 +15,56 @@ const initialState: IState = {
     typeahead: ''
 };
 
-export default handleActions<IState, Todo>({
-
-    [SET_TYPEHEAD]: (state: IState, action: Action<string>): IState => {
-        return <IState>{
+export default function todoReducer(state = initialState, { type, payload }) {
+    switch (type) {
+        case SET_TYPEHEAD:
+            return {
             todos: state.todos,
-            typeahead: action.payload
+            typeahead: payload
         };
-    },
-
-    [ADD_TODO]: (state: IState, action: Action<Todo>): IState => {
-        return <IState>{
+        case ADD_TODO:
+            return {
             todos: [{
                 id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-                text: action.payload.text
+                text: payload.text
             }, ...state.todos],
             typeahead: ''
         };
-    },
-
-    [DELETE_TODO]: (state: IState, action: Action<Todo>): IState => {
-        return <IState>{
+        case DELETE_TODO:
+            return {
             todos: state.todos.filter(todo =>
-                todo.id !== action.payload.id
+                todo.id !== payload.id
             )
         };
+        default:
+            return state;
     }
-}, initialState);
+}
+
+// export default handleActions<IState, Todo>({
+
+//     [SET_TYPEHEAD]: (state: IState, action: Action<string>): IState => {
+//         return <IState>{
+//             todos: state.todos,
+//             typeahead: action.payload
+//         };
+//     },
+
+//     [ADD_TODO]: (state: IState, action: Action<Todo>): IState => {
+//         return <IState>{
+//             todos: [{
+//                 id: state.todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+//                 text: action.payload.text
+//             }, ...state.todos],
+//             typeahead: ''
+//         };
+//     },
+
+//     [DELETE_TODO]: (state: IState, action: Action<Todo>): IState => {
+//         return <IState>{
+//             todos: state.todos.filter(todo =>
+//                 todo.id !== action.payload.id
+//             )
+//         };
+//     }
+// }, initialState);

@@ -12,19 +12,23 @@ interface TodoItemProps {
 
 function TodoItem(props: TodoItemProps) {
 
-  const handleClick = () => {
+  function handleClick() {
     props.setTypehead(props.todo.text);
   };
-  const { todo, deleteTodo } = props;
+
+  function handleDelete() {
+    props.deleteTodo(props.todo);
+    props.setTypehead('');
+  };
 
   return (
     <li>
       <div className="view">
         <label onClick={handleClick}>
-          {todo.text}
+          {props.todo.text}
         </label>
         <button className="destroy"
-          onClick={() => deleteTodo(todo)} />
+          onClick={handleDelete} />
       </div>
     </li>
   );

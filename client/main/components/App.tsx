@@ -45,25 +45,17 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     // setTypehead = (typehead: string) => {
-    //     console.log('this.props.store = ', this.props.store);
-    //     console.log('this.props.dispatch = ', this.props.dispatch);
-    //     console.log('this.props.dispatch(setTypehead(typehead)) = ', this.props.dispatch(setTypehead(typehead)));
+    //     this.props.dispatch(setTypehead(typehead));
     // }
-
     // addTodo = (text: string) => {
     //     this.props.dispatch(addTodo(text));
     // }
-
     // deleteTodo = (t: model.Todo) => {
     //     this.props.dispatch(deleteTodo(t));
     // }
 
     render() {
-        console.log('mapStateToProps = ', mapStateToProps(this.state));
-        console.log('mapDispatchToProps = ', mapDispatchToProps(this.state));
         const { store } = this.props;
-        this.log(this.props.store);
-        this.log2(this.props);
         return (
             <div className="todoapp">
                 <Header
@@ -80,9 +72,6 @@ class App extends React.Component<AppProps, AppState> {
             </div>
         );
     }
-
-    log = (store) => console.log('this.props.store2 = ', store);
-    log2 = (props) => console.log('this.props2 = ', props);
 }
 
 const mapStateToProps = state => {

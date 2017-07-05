@@ -9,28 +9,19 @@ interface HeaderProps {
     onBlur: () => void;
 };
 
-class Header extends React.Component<HeaderProps, any> {
+function Header(props) {
 
-    constructor(props){
-        super(props);
-        this.state = {typehead: ''};
-    }
-
-    handleSubmit = (e) => {
+    function handleSubmit(e) {
         const text = e.target.value.trim();
         if (text && e.which === 13) {
-            this.props.addTodo(this.state.typehead);
-            this.setState({typehead: ''});
+            props.addTodo(text);
         }
     }
 
-    handleChange = (e) => {
+    function handleChange(e) {
         const text = e.target.value.trim();
-        this.setState({typehead: text});
-        this.props.setTypehead(this.state.typehead);
+        props.setTypehead(text);
     }
-
-    render() {
         return (
             <header className="header">
                 <h1>todos</h1>
@@ -41,14 +32,13 @@ class Header extends React.Component<HeaderProps, any> {
                     })}
                     type="text"
                     placeholder="What needs to be done?"
-                    value={this.state.typehead}
-                    onBlur={this.props.onBlur}
-                    onFocus={this.props.onFocus}
-                    onChange={this.handleChange}
-                    onKeyDown={this.handleSubmit} />
+                    value={props.typehead}
+                    onBlur={props.onBlur}
+                    onFocus={props.onFocus}
+                    onChange={handleChange}
+                    onKeyDown={handleSubmit} />
             </header>
         );
-    }
 }
 
 export default Header;

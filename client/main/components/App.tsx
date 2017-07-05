@@ -19,7 +19,6 @@ interface AppProps {
 }
 
 interface AppState {
-    isLoading: boolean;
     isShowList: boolean;
     todos: model.Todo[];
 }
@@ -28,7 +27,6 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
             isShowList: false,
             todos: []
         };
@@ -36,14 +34,8 @@ class App extends React.Component<AppProps, AppState> {
 
     showList = () => {
         this.setState({
-            isShowList: true,
-            isLoading: true
+            isShowList: true
         });
-        setTimeout(() => {
-            this.setState({
-                isLoading: false
-            })
-        }, 500);
     }
 
     hideList = () => {
@@ -54,29 +46,8 @@ class App extends React.Component<AppProps, AppState> {
         }, 300);
     }
 
-    handleAdd = (text: string) => {
-        this.props.addTodo(text);
-        this.showList();
-    }
-
     render() {
         const { store } = this.props;
-        const loader = (<section className="main">
-            <ul className="todo-list">
-                <li>
-                    <div className="view">
-                        <label>
-                            Loading...
-                        </label>
-                    </div>
-                </li>
-            </ul>
-        </section>);
-        const listOfTodos = this.state.isLoading ? loader : (<MainSection
-            todos={store.todos}
-            typeahead={store.typeahead}
-            setTypehead={(typehead: string) => this.props.setTypehead(typehead)}
-            deleteTodo={(t: model.Todo) => this.props.deleteTodo(t)} />);
 
         return (
             <div className="todoapp">
@@ -84,9 +55,13 @@ class App extends React.Component<AppProps, AppState> {
                     onFocus={() => this.showList()}
                     onBlur={() => this.hideList()}
                     typehead={store.typeahead}
-                    addTodo={(text: string) => this.handleAdd(text)}
+                    addTodo={(text: string) => this.props.addTodo(text)}
                     setTypehead={(typehead: string) => this.props.setTypehead(typehead)} />
-                {this.state.isShowList && listOfTodos}
+                {this.state.isShowList && <MainSection
+                    todos={store.todos}
+                    typeahead={store.typeahead}
+                    setTypehead={(typehead: string) => this.props.setTypehead(typehead)}
+                    deleteTodo={(t: model.Todo) => this.props.deleteTodo(t)} />}
             </div>
         );
     }

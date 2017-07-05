@@ -11,7 +11,7 @@ interface MainSectionProps {
 };
 
 interface MainSectionState {
-  isLoading: boolean;
+  todos: Todo[];
 };
 
 class MainSection extends React.Component<MainSectionProps, MainSectionState> {
@@ -19,29 +19,40 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      todos: null
     }
   }
 
-  timeOutId: number
-
-  showLoader = () => {
-    this.setState({
-      isLoading: true
-    });
+  getData = () => {
     this.timeOutId = setTimeout(() => {
       this.setState({
-        isLoading: false
+        todos: this.typeheadFilter(this.props.todos, this.props.typeahead)
       })
     }, 500);
   }
 
+  clearData = () => {
+    this.setState({
+      todos: null
+    })
+  }
+
+  typeheadFilter = (arr, str) => {
+    if (!str) {
+      return arr;
+    }
+    return arr.filter(t => (t.text.indexOf(str) !== -1));
+  };
+
+  timeOutId: number
+
   componentDidMount() {
-    this.showLoader();
+    this.getData();
   }
 
   componentWillReceiveProps() {
-    this.showLoader();
+    this.clearData();
+    this.getData();
   }
 
   componentWillUnmount() {
@@ -49,15 +60,8 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   }
 
   render() {
-    function typeheadFilter(arr: Todo[], str: string): Todo[] {
-      if (!str) {
-        return arr;
-      }
-      return arr.filter(t => (t.text.indexOf(str) !== -1));
-    };
 
-    const { todos, typeahead, deleteTodo, setTypehead } = this.props;
-    const filteredTodos = typeheadFilter(this.props.todos, typeahead);
+    const { deleteTodo, setTypehead } = this.props;
     const loader = (
       <li>
         <div className="view">
@@ -66,11 +70,12 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
           </label>
         </div>
       </li>);
+    const todos = this.state.todos;
 
     return (
       <section className="main">
         <ul className="todo-list">
-          {this.state.isLoading ? loader : filteredTodos.map(todo =>
+          {!todos ? loader : todos.map(todo =>
             <TodoItem
               key={todo.id}
               todo={todo}

@@ -69,7 +69,7 @@ class App extends React.Component<AppProps, AppState> {
 
 const mapStateToProps = state => {
     return {
-        store: state.todos
+        store: state.todosState
     }
 };
 
@@ -80,6 +80,8 @@ const mapDispatchToProps = dispatch => {
         deleteTodo
     }, dispatch);
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 // const mapDispatchToProps = dispatch => {
 //     return {
@@ -97,4 +99,13 @@ const mapDispatchToProps = dispatch => {
 //     };
 // };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(
+//     state => ({
+//         store: state.todos
+//     }),
+//     dispatch => ({
+//         setTypehead: function (typehead: string) { return dispatch(setTypehead(typehead)) },
+//         addTodo: function (text: string) { return dispatch(addTodo(text)) },
+//         deleteTodo: function (t: model.Todo) { return dispatch(deleteTodo(t)) }
+//     })
+// )(App);

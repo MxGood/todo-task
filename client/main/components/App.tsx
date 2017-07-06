@@ -1,4 +1,4 @@
-import { Dispatch, bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
 
@@ -74,30 +74,27 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    var result = bindActionCreators({
+    return bindActionCreators({
         setTypehead,
         addTodo,
         deleteTodo
     }, dispatch);
-    return result;
 };
 
 // const mapDispatchToProps = dispatch => {
-//     var result = {
+//     return {
 //         setTypehead: bindActionCreators(setTypehead, dispatch),
 //         addTodo: bindActionCreators(addTodo, dispatch),
 //         deleteTodo: bindActionCreators(deleteTodo, dispatch)
 //     };
-//     return result;
 // };
 
 // const mapDispatchToProps = dispatch => {
-//     var result = {
+//     return {
 //         setTypehead: function(typehead: string){ return dispatch(setTypehead(typehead))},
 //         addTodo: function(text: string){ return dispatch(addTodo(text))},
 //         deleteTodo: function(t: model.Todo){ return dispatch(deleteTodo(t))}
 //     };
-//     return result;
 // };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

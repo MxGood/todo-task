@@ -22,23 +22,23 @@ function Header(props) {
         const text = e.target.value.trim();
         props.setTypehead(text);
     }
-        return (
-            <header className="header">
-                <h1>todos</h1>
-                <input className={
-                    classNames({
-                        edit: false,
-                        'new-todo': true
-                    })}
-                    type="text"
-                    placeholder="What needs to be done?"
-                    value={props.typehead}
-                    onBlur={props.onBlur}
-                    onFocus={props.onFocus}
-                    onChange={handleChange}
-                    onKeyDown={handleSubmit} />
-            </header>
-        );
+    return (
+        <header className="header">
+            <h1>todos</h1>
+            <input className={
+                classNames({
+                    edit: false,
+                    'new-todo': true
+                })}
+                type="text"
+                placeholder="What needs to be done?"
+                value={props.typehead}
+                onBlur={props.onBlur}
+                onFocus={props.onFocus}
+                onChange={handleChange}
+                onKeyDown={handleSubmit} />
+        </header>
+    );
 }
 
 export default Header;

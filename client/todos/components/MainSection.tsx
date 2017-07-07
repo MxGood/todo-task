@@ -23,10 +23,10 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
     }
   }
 
-  loadData = () => {
+  loadData = (filter) => {
     return new Promise((resolve) => {
       this.timeOutId = setTimeout(() => {
-        let data = this.typeheadFilter(this.props.todos, this.props.typeahead);
+        let data = this.typeheadFilter(this.props.todos, filter);
         resolve(data);
       }, 500);
     });
@@ -46,11 +46,11 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   timeOutId: number
 
   componentDidMount() {
-    this.loadData().then(this.setData);
+    this.loadData(this.props.typeahead).then(this.setData);
   }
 
-  componentWillReceiveProps() {
-    this.loadData().then(this.setData);
+  componentWillReceiveProps(nextProps) {
+    this.loadData(nextProps.typeahead).then(this.setData);
   }
 
   componentWillUnmount() {

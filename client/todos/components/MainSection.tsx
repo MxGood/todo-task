@@ -23,36 +23,34 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
     }
   }
 
-  getData = () => {
-    this.timeOutId = setTimeout(() => {
-      this.setState({
-        todos: this.typeheadFilter(this.props.todos, this.props.typeahead)
-      })
-    }, 500);
+  loadData = (filter) => {
+    return new Promise((resolve) => {
+      this.timeOutId = setTimeout(() => {
+        let data = this.typeheadFilter(this.props.todos, filter);
+        resolve(data);
+      }, 500);
+    });
   }
 
-  clearData = () => {
-    this.setState({
-      todos: null
-    })
+  setData = (todos) => {
+    this.setState({ todos })
   }
 
   typeheadFilter = (arr, str) => {
     if (!str) {
       return arr;
     }
-    return arr.filter(t => (t.text.indexOf(str) !== -1));
+    return arr.filter(item => (item.text.indexOf(str) !== -1));
   };
 
   timeOutId: number
 
   componentDidMount() {
-    this.getData();
+    this.loadData(this.props.typeahead).then(this.setData);
   }
 
   componentWillReceiveProps() {
-    this.clearData();
-    this.getData();
+    this.loadData(this.props.typeahead).then(this.setData);
   }
 
   componentWillUnmount() {
@@ -62,7 +60,7 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
   render() {
 
     const { deleteTodo, setTypehead } = this.props;
-    const loader = (
+    const animationOfLoad = (
       <li>
         <div className="view">
           <label>
@@ -75,7 +73,7 @@ class MainSection extends React.Component<MainSectionProps, MainSectionState> {
     return (
       <section className="main">
         <ul className="todo-list">
-          {!todos ? loader : todos.map(todo =>
+          {!this.state.todos ? animationOfLoad : todos.map(todo =>
             <TodoItem
               key={todo.id}
               todo={todo}

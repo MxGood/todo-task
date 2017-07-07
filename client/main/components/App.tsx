@@ -20,15 +20,13 @@ interface AppProps {
 
 interface AppState {
     isShowList: boolean;
-    todos: model.Todo[];
 }
 
 class App extends React.Component<AppProps, AppState> {
     constructor(props) {
         super(props);
         this.state = {
-            isShowList: false,
-            todos: []
+            isShowList: false
         };
     }
 

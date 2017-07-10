@@ -65,19 +65,17 @@ class App extends React.Component<AppProps, AppState> {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        store: state.todosState
-    }
-};
+const mapStateToProps = state => ({
+    store: state.todosState
+});
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
         setTypehead,
         addTodo,
         deleteTodo
-    }, dispatch);
-};
+    }, dispatch)
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
